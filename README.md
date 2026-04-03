@@ -92,13 +92,6 @@ graph TD
     K --> M["Final Output"]
     L --> M
     I --> M
-
-    classDef agent fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    class B,C,D,E,F agent
-
-    style A fill:#c8e6c9
-    style M fill:#ffcdd2
-
 ```
 
 All agents communicate via **structured JSON only** — never raw documents.

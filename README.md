@@ -1,4 +1,4 @@
-# Multi-Agent Research Citation Engine
+# 🔍 Autonomous-Agentic-AI-Framework 
 
 A production-grade AI research assistant built with **CrewAI** in Python.  
 Enter any research topic and receive a structured report with accurate citations,
@@ -7,19 +7,71 @@ or Elicit, but fully open and customisable.
 
 ---
 
+## 🌟 Overview
+
+This project presents an **autonomous multi-agent AI framework** built using CrewAI, designed to simulate end-to-end task execution through collaborative intelligent agents.
+
+The system demonstrates how multiple specialized agents can work together to:
+
+- 📊 **Gather information** from diverse sources
+- ✍️ **Generate structured content** with precision
+- ✅ **Validate outputs** for accuracy and credibility
+- 🔧 **Correct errors** through iterative refinement
+- 🎯 **Refine results** over multiple iterations
+- 📈 **Analyze system performance** with detailed metrics
+
+Using an **iterative 3-stage pipeline**, the framework improves output quality over time and visualizes performance progression, showcasing **convergence behavior in autonomous systems**.
+
 ---
 
-## What It Does
+## ✨ Key Features
 
-1. **Planner Agent** decomposes your topic into 4–6 targeted search queries
-2. **Search Agent** retrieves up to 8 sources per query from arXiv, IEEE, ACL, GitHub, and official docs via Exa and Tavily APIs
-3. **Validator Agent** scores every source (1–10) on credibility, recency, and technical depth — keeps only the top 5
-4. **Extractor Agent** fetches each source (PDF or webpage), chunks the text, and extracts metrics, datasets, findings, and verbatim quotes
-5. **Synthesizer Agent** merges all evidence into a structured Markdown report with inline citations — no hallucination, every claim is grounded
+| Feature | Description |
+|---------|-------------|
+| 🤖 **Multi-Agent Collaboration** | 5 specialized agents working in perfect harmony |
+| 🔄 **Iterative Refinement** | 3-stage pipeline for progressive improvement |
+| 🎯 **Intelligent Planning** | Automatic query decomposition and strategy optimization |
+| 🔍 **Multi-Source Search** | Integration with Exa, Tavily, arXiv, IEEE, ACL, GitHub |
+| ✅ **Quality Validation** | Credibility scoring (1-10) with evidence filtering |
+| 📊 **Evidence Extraction** | Automated metrics, datasets, and key findings extraction |
+| 📝 **Citation Management** | Accurate inline citations with verified references |
+| 📈 **Performance Tracking** | Real-time quality metrics and latency analysis |
+| 🎨 **Visual Reports** | Generated graphs showing convergence behavior |
+| 🔐 **No Hallucination** | Every claim grounded in verified sources |
+| ⚙️ **Customizable** | Extensible architecture for custom agents and tools |
+| 📦 **JSON-Based Communication** | Structured data flow between agents |
 
 ---
 
-## Architecture
+## 📋 What It Does
+
+1. 📍 **Planner Agent** decomposes your topic into 4–6 targeted search queries
+2. 🔎 **Search Agent** retrieves up to 8 sources per query from arXiv, IEEE, ACL, GitHub, and official docs via Exa and Tavily APIs
+3. ✅ **Validator Agent** scores every source (1–10) on credibility, recency, and technical depth — keeps only the top 5
+4. 📄 **Extractor Agent** fetches each source (PDF or webpage), chunks the text, and extracts metrics, datasets, findings, and verbatim quotes
+5. ✍️ **Synthesizer Agent** merges all evidence into a structured Markdown report with inline citations — no hallucination, every claim is grounded
+
+---
+
+## 📐 Architecture
+
+```
+User Topic
+    ↓
+Planner Agent      → { "queries": [...] }
+    ↓
+Search Agent       → [ { title, url, source_type, snippet, ... } ]
+    ↓
+Validator Agent    → { "validated_sources": [ top 5 scored ] }
+    ↓
+Extractor Agent    → [ { metrics, datasets, key_findings, quotes } ]
+    ↓
+Synthesizer Agent  → Final Markdown Report
+```
+
+---
+
+## 🔄 WorkFlow
 
 ```mermaid
 graph TD
@@ -27,24 +79,35 @@ graph TD
     B -->|"queries JSON"| C["Search Agent"]
     C -->|"sources list"| D["Validator Agent"]
     D -->|"top 5 sources"| E["Extractor Agent"]
-    E -->|"evidence chunks"| F["Synthesizer Agent"]
-    F --> G["Final Report.md"]
+    E -->|"evidence JSON"| F["Synthesizer Agent"]
+
+    F --> G["Initial Report"]
+    G --> H["Refinement Loop (2 Iterations)"]
+    H --> I["Refined Report"]
+
+    I --> J["Evaluation Layer"]
+    J -->|"quality score"| K["Quality Graph"]
+    J -->|"latency + tokens"| L["Performance Table"]
+
+    K --> M["Final Output"]
+    L --> M
+    I --> M
 
     classDef agent fill:#e1f5fe,stroke:#01579b,stroke-width:2px
     class B,C,D,E,F agent
 
     style A fill:#c8e6c9
-    style G fill:#ffcdd2
-```
+    style M fill:#ffcdd2
 
+```
 
 All agents communicate via **structured JSON only** — never raw documents.
 
 ---
 
-## Quick Start
+## ⚡ Quick Start
 
-### 1. Clone & install
+### 1️⃣ Clone & install
 
 ```bash
 git clone <repo-url>
@@ -53,7 +116,7 @@ python -m venv .venv && .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 2. Configure API keys
+### 2️⃣ Configure API keys
 
 ```bash
 cp .env.example .env  # if exists, or create .env
@@ -69,7 +132,7 @@ cp .env.example .env  # if exists, or create .env
 | `LLM_TEMPERATURE` | Optional | Temperature (default: `0.3`) |
 | `OUTPUT_FILE` | Optional | Report save path (default: `outputs/research_report.md`) |
 
-### 3. Run
+### 3️⃣ Run
 
 ```bash
 # Interactive mode
@@ -84,7 +147,7 @@ python -m research_crew.main --topic "diffusion models" --output diffusion.md
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 multi-agent-researcher-2/
@@ -131,55 +194,102 @@ The system enforces strict limits at every layer:
 
 ---
 
-## Output Format
+## 📄 Output Format
+
+The generated report includes multiple sections with rich formatting and color coding:
+
+### 📋 Report Sections with Color Coding
+
+<table>
+<tr>
+<td>
+
+**🟢 Key Insights**
+- Headline with evidence
+- Source citations
+
+</td>
+<td>
+
+**🔵 Methodology**
+- Technical approach
+- Research strategy
+
+</td>
+<td>
+
+**🟠 Benchmarks**
+- Performance metrics
+- Comparative data
+
+</td>
+</tr>
+</table>
+
+### Sample Output Structure
 
 ```markdown
-# 🔴 **Final Report** *(Red Header)*
+# Final Report
 
-# 🟢 **Research Summary: <Topic>** *(Green Title)*
+🎯 **Research Summary: <Topic>**
 
-## 💙 **Key Insights** *(Blue Section)*
+## 🟢 Key Insights
 
-🟢 **1. <Headline>** *(Green List)*
-   > Supporting evidence, 2–4 sentences.
+1. **<Headline>**  
+   Supporting evidence, 2–4 sentences.  
    
-   *🌟 Source: [1]* *(Gold Citation)*
-
-## 💜 **Methodology Overview** *(Purple Section)*
-> 💙 Concise description drawn from extracted methodology snippets. *(Blue Text)*
-
-## 🟣 **Benchmarks & Metrics** *(Purple Table)*
-| 🔵 Metric | 🟡 Value | 🔗 Source |
-|-----------|----------|-----------|
-| ... | ... | [1] |
-
-## 🟠 **Refinement & Iterative Improvement** *(Orange Section)*
-
-**Iteration 1 (Initial):**
-> Basic structure present but limited depth. *(Gray)*
-
-**Iteration 2 (Correction):**
-> Improved structure, added citations, better clarity. *(Gray)*
-
-**Iteration 3 (Refinement):**
-> Added benchmarks, improved completeness and explanation. *(Gray)*
+   📌 *Source: [1]*  
 
 ---
 
-**⏱️ Generated in {total_time}s**  
-**📊 Quality Scores: {quality_scores}** *(Teal Stats)*
+## 🔵 Methodology Overview
+Concise description drawn from extracted methodology snippets.
 
-## ❤️ **Sources** *(Pink Section)*
+---
 
-**[1] <Title>**  
-`📎 <URL>` *(Blue Link)*
+## 🟠 Benchmarks & Metrics
+
+| 📊 Metric | 📈 Value | 📎 Source |
+|-----------|---------|---------|
+| Accuracy  | 94.5%   | [1]     |
+| Latency   | 2.3s    | [2]     |
+
+---
+
+## 📈 Refinement & Iterative Improvement
+
+| Iteration | Status | Quality Score |
+|-----------|--------|---------------|
+| 🟡 Iteration 1 (Initial) | Basic structure, limited depth | 6.2/10 |
+| 🟠 Iteration 2 (Correction) | Improved structure, better clarity | 8.1/10 |
+| 🟢 Iteration 3 (Refinement) | Added benchmarks, comprehensive | 9.3/10 |
+
+---
+
+⏱️ **Generated in** {total_time}s  
+⭐ **Quality Scores:** {quality_scores}
+
+---
+
+## 📚 Sources
+
+[1] **<Title>**  
+🔗 <URL>
 ```
 
+### 🎨 Color & Emoji Guide
 
+| Indicator | Usage | Symbol |
+|-----------|-------|--------|
+| 🟢 **Green** | Validated, high confidence | ✅ |
+| 🔵 **Blue** | Technical details, methodology | 🔬 |
+| 🟠 **Orange** | Benchmarks, metrics | 📊 |
+| 🟡 **Yellow** | Initial/draft content | ⚠️ |
+| 🔴 **Red** | Requires attention, low confidence | ❌ |
 
 ---
 
-## Extending the System
+## 🔧 Extending the System
 
 | Goal | Where to change |
 |---|---|
@@ -191,12 +301,12 @@ The system enforces strict limits at every layer:
 
 ---
 
-## Requirements
+## 📦 Requirements
 
-- Python ≥ 3.10
-- OpenAI API key with GPT-4o access
-- Exa API key (free tier available at [exa.ai](https://exa.ai))
-- Tavily API key (optional, free tier at [tavily.com](https://tavily.com))
+- 🐍 Python ≥ 3.10
+- 🔑 OpenAI API key with GPT-4o access
+- 🔑 Exa API key (free tier available at [exa.ai](https://exa.ai))
+- 🔑 Tavily API key (optional, free tier at [tavily.com](https://tavily.com))
 
 ---
 
@@ -235,22 +345,69 @@ The system enforces strict limits at every layer:
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/sujal-SM/agentic-ai-framework.git
+git clone https://github.com/sujal-SM/Autonomous-Agentic-AI-Frameworkgit
 cd agentic-ai-framework
 ```
-### Create Virtual Environment
+
+### 2️⃣ Create Virtual Environment
 ```bash
 python -m venv venv
 source venv/bin/activate      # Mac/Linux
 venv\Scripts\activate         # Windows
 ```
-### Setup Environment Variables
+
+### 3️⃣ Setup Environment Variables
 ```bash
 Create a .env file:
 
 OPENAI_API_KEY=your_api_key_here
 ```
 
-📜 License
+---
 
-This project is licensed under the MIT License.
+## 📜 License
+
+This project is licensed under the **MIT License** - see below for details.
+
+```
+MIT License
+
+Copyright (c) 2024 Sujal SM
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+---
+
+## 👨‍💻 Authors
+
+- **Sujal SM** - [GitHub](https://github.com/Sujal-SM)
+- **Triman1905** - [GitHub](https://github.com/triman1905)
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+---
+
+## 📧 Support
+
+For questions or issues, please open a GitHub issue on the [repository](https://github.com/Sujal-SM/Autonomous-Agentic-AI-Framework).
